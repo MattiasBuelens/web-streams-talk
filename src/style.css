@@ -1,1 +1,11 @@
-/* TODO */
+.reveal .fragment.appear:not(.visible) {
+  display: none;
+}
+
+:not(pre) > code.hljs {
+  background: none;
+}
+
+:not(pre) > code.hljs * {
+  font-style: normal;
+}

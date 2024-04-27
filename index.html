@@ -10,8 +10,123 @@
       <div class="slides">
         <section><h1>Web Streams</h1></section>
         <section>
-          <h1>Code</h1>
           <section>
+            <h1>What's a stream?</h1>
+          </section>
+          <section>
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Single value</th>
+                  <th>Multiple values</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Sync</td>
+                  <td><code>T</code></td>
+                  <td><code>Iterator&lt;T&gt;</code></td>
+                </tr>
+                <tr>
+                  <td>Async</td>
+                  <td><code>Promise&lt;T&gt;</code></td>
+                  <td><code>AsyncIterator&lt;T&gt;</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+          <section data-auto-animate>
+            <h2 data-id="title">Single value / synchronous</h2>
+            <pre
+              data-id="code"
+            ><code class="language-js" data-trim data-line-numbers data-noescape>
+              const value = getThing();
+              doSomething(value);
+            </code></pre>
+            <p>Examples:</p>
+            <ul>
+              <li>
+                Your name as a
+                <code class="language-ts" data-noescape>string</code>
+              </li>
+              <li>
+                A random
+                <code class="language-ts" data-noescape>number</code> from
+                <code class="language-js" data-noescape>Math.random()</code>
+              </li>
+            </ul>
+          </section>
+          <section data-auto-animate>
+            <h2 data-id="title">Single value / asynchronous</h2>
+            <pre
+              data-id="code"
+            ><code class="language-js" data-trim data-line-numbers data-noescape>
+              const value = await getThing();
+              doSomething(value);
+            </code></pre>
+            <p>Examples:</p>
+            <ul>
+              <li>...</li>
+            </ul>
+          </section>
+          <section data-auto-animate data-auto-animate-restart>
+            <h2 data-id="title">Multiple values / synchronous</h2>
+            <pre
+              data-id="code"
+            ><code class="language-js" data-trim data-line-numbers data-noescape>
+              for (const value of getThings()) {
+                doSomething(value);
+              }
+            </code></pre>
+            <p>Examples:</p>
+            <ul>
+              <li>
+                Your favorite colors as an
+                <code class="language-ts" data-noescape
+                  >Array&lt;string&gt;</code
+                >
+              </li>
+              <li>
+                A
+                <code class="language-ts" data-noescape
+                  >NodeList&lt;HTMLElement&gt;</code
+                >
+                from
+                <code class="language-js" data-noescape
+                  >document.querySelectorAll()</code
+                >
+              </li>
+            </ul>
+          </section>
+          <section data-auto-animate>
+            <h2 data-id="title">Multiple values / asynchronous</h2>
+            <pre
+              data-id="code"
+            ><code class="language-js" data-trim data-line-numbers data-noescape>
+              for await (const value of getThings()) {
+                doSomething(value);
+              }
+            </code></pre>
+            <p>Examples:</p>
+            <ul>
+              <li>
+                The messages in a group chat as a
+                <code class="language-ts" data-noescape
+                  >ReadableStream&lt;string&gt;</code
+                >
+              </li>
+              <li>
+                The bytes from a <code class="language-js">fetch()</code>
+                <code class="language-js">Response</code> as a
+                <code class="language-ts" data-noescape
+                  >ReadableStream&lt;Uint8Array&gt;</code
+                >
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h1>Code</h1>
             <pre><code class="language-js" data-trim data-noescape>
               export async function foo(hello) {
                 console.log("a b");
