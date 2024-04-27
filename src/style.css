@@ -1,5 +1,5 @@
-.reveal .fragment.appear:not(.visible) {
-  display: none;
+.reveal h1 {
+  --r-heading-line-height: 1;
 }
 
 :not(pre) > code.hljs {
