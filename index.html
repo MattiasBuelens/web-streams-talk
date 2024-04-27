@@ -14,6 +14,7 @@
             <h1>What's a stream?</h1>
           </section>
           <section>
+            <h2>Kinds of values</h2>
             <table>
               <thead>
                 <tr>
@@ -24,14 +25,26 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>Sync</td>
-                  <td><code>T</code></td>
-                  <td><code>Iterator&lt;T&gt;</code></td>
+                  <th>Synchronous</th>
+                  <td><code class="language-ts">T</code></td>
+                  <td>
+                    <code class="language-ts" data-noescape
+                      >Iterator&lt;T&gt;</code
+                    >
+                  </td>
                 </tr>
                 <tr>
-                  <td>Async</td>
-                  <td><code>Promise&lt;T&gt;</code></td>
-                  <td><code>AsyncIterator&lt;T&gt;</code></td>
+                  <th>Asynchronous</th>
+                  <td>
+                    <code class="language-ts" data-noescape
+                      >Promise&lt;T&gt;</code
+                    >
+                  </td>
+                  <td>
+                    <code class="language-ts" data-noescape
+                      >AsyncIterator&lt;T&gt;</code
+                    >
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -48,12 +61,12 @@
             <ul>
               <li>
                 Your name as a
-                <code class="language-ts" data-noescape>string</code>
+                <code class="language-ts">string</code>
               </li>
               <li>
                 A random
-                <code class="language-ts" data-noescape>number</code> from
-                <code class="language-js" data-noescape>Math.random()</code>
+                <code class="language-ts">number</code> from
+                <code class="language-js">Math.random()</code>
               </li>
             </ul>
           </section>
@@ -67,7 +80,15 @@
             </code></pre>
             <p>Examples:</p>
             <ul>
-              <li>...</li>
+              <li>
+                The response text from a
+                <code class="language-js">fetch()</code>ed
+                <code class="language-js">Response.text()</code>
+                as a
+                <code class="language-ts" data-noescape
+                  >Promise&lt;string&gt;</code
+                >
+              </li>
             </ul>
           </section>
           <section data-auto-animate data-auto-animate-restart>
@@ -117,21 +138,15 @@
                 >
               </li>
               <li>
-                The bytes from a <code class="language-js">fetch()</code>
-                <code class="language-js">Response</code> as a
+                The stream of byte chunks from a
+                <code class="language-js">fetch()</code>ed
+                <code class="language-js">Response.body</code>
+                as a
                 <code class="language-ts" data-noescape
                   >ReadableStream&lt;Uint8Array&gt;</code
                 >
               </li>
             </ul>
-          </section>
-          <section>
-            <h1>Code</h1>
-            <pre><code class="language-js" data-trim data-noescape>
-              export async function foo(hello) {
-                console.log("a b");
-              }
-            </code></pre>
           </section>
         </section>
       </div>
