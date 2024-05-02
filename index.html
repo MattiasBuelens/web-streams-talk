@@ -57,8 +57,29 @@
                   </li>
                 </ul>
               </li>
-              <li>data source</li>
-              <li>that can be created, processed and consumed</li>
+              <li>
+                data source whose chunks
+                <ul class="fragment current-appear">
+                  <li>chunk = single bit of data</li>
+                  <li>
+                    can be anything: <code class="language-ts">string</code>,
+                    <code class="language-ts">number</code>,&hellip;
+                  </li>
+                  <li>
+                    byte streams: chunk =
+                    <code class="language-ts">Uint8Array</code>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                can be read, processed or written
+                <ul class="fragment current-appear">
+                  <li>
+                    different kinds of streams for producers, transformers and
+                    consumers
+                  </li>
+                </ul>
+              </li>
               <li>
                 in an incremental fashion
                 <ul class="fragment current-appear">
