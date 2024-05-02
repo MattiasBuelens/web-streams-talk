@@ -2,6 +2,18 @@
   --r-heading-line-height: 1;
 }
 
+.reveal .fragment.current-appear:not(.current-fragment) {
+  display: none;
+}
+
+.reveal .fragment.current-appear.current-fragment {
+  transform: translate(0, 0);
+
+  @starting-style {
+    transform: translate(0, 40px);
+  }
+}
+
 blockquote > cite {
   display: block;
   text-align: right;

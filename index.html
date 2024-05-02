@@ -38,6 +38,35 @@
           <section>
             <h1>What's a stream?</h1>
           </section>
+          <section data-auto-animate>
+            <h2>A stream is an...</h2>
+            <ul class="stretch">
+              <li>
+                ordered
+                <ul class="fragment current-appear">
+                  <li>process <em>N</em>th item before <em>N+1</em>th item</li>
+                </ul>
+              </li>
+              <li>
+                possibly asynchronous
+                <ul class="fragment current-appear">
+                  <li>next item might not be available immediately</li>
+                  <li>
+                    need to <code class="language-js">await</code> a
+                    <code class="language-ts">Promise</code>
+                  </li>
+                </ul>
+              </li>
+              <li>data source</li>
+              <li>that can be created, processed and consumed</li>
+              <li>
+                in an incremental fashion
+                <ul class="fragment current-appear">
+                  <li>can start processing before all data is available</li>
+                </ul>
+              </li>
+            </ul>
+          </section>
           <section>
             <h2>Kinds of values</h2>
             <table>
