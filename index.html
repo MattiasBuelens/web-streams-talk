@@ -118,6 +118,55 @@
               }
             </code></pre>
           </section>
+          <section>
+            <h2>Streaming across threads</h2>
+            <ul>
+              <li>
+                all streams are transferable, which means you can
+                <code class="language-js">postMessage()</code> them to a worker
+              </li>
+            </ul>
+            <pre><code class="language-js" data-trim data-line-numbers data-noescape>
+              // page.js
+              const worker = new Worker("worker.js");
+              const { readable, writable } = new TransformStream();
+              worker.postMessage(readable, { transfer: [readable] });
+              const writer = writable.getWriter();
+              writer.write("Hello world!"); // send to worker's ReadableStream
+              writer.close();
+
+              // worker.js
+              onmessage = async (event) => {
+                const readable = event.data; // transferred ReadableStream
+                for await (const chunk of readable) {
+                  console.log(chunk); // -> "Hello world!"
+                }
+              };
+            </code></pre>
+          </section>
+          <section>
+            <h2>Streaming across threads</h2>
+            <ul>
+              <li>move CPU-intensive work to another thread</li>
+            </ul>
+            <pre><code class="language-js" data-trim data-line-numbers data-noescape>
+              // page.js
+              const worker = new Worker("worker.js");
+              worker.onmessage = async (event) => {
+                const transform = event.data; // transferred TransformStream
+                const input = (await fetch("https://example.com")).body;
+                const output = input.pipeThrough(transform);
+                for await (const chunk of output) { console.log(chunk); }
+              };
+              // worker.js
+              const transform = new TransformStream({
+                transform(chunk, controller) {
+                  controller.enqueue(doExpensiveTransform(chunk));
+                }
+              });
+              self.postMessage(transform, { transfer: [transform] });
+            </code></pre>
+          </section>
         </section>
         <section data-visibility="hidden">
           <!-- TODO What to do with this section? -->
