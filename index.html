@@ -90,6 +90,32 @@
             </ul>
           </section>
           <section>
+            <h2>Readable streams</h2>
+            <ul>
+              <li>
+                a <em>source</em> of data from which you can
+                <em>read</em> chunks
+              </li>
+              <li>
+                e.g.: HTTP response from
+                <code class="language-js">fetch()</code>
+              </li>
+            </ul>
+            <pre><code class="language-js" data-trim data-line-numbers data-noescape>
+              // non-streaming
+              const response = await fetch("https://example.com");
+              const bytes = await response.arrayBuffer();
+              console.log(`received ${bytes.byteLength} total bytes`);
+
+              // streaming
+              const response = await fetch("https://example.com");
+              const body = response.body; // no await here
+              for await (const chunk of body) {
+                console.log(`received chunk with ${chunk.byteLength} bytes`);
+              }
+            </code></pre>
+          </section>
+          <section>
             <h2>Kinds of values</h2>
             <table class="stretch">
               <thead>
