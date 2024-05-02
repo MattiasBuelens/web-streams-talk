@@ -109,11 +109,11 @@
 
               // streaming
               const response = await fetch("https://example.com");
-              const body = response.body; // no await here
-              const reader = body.getReader();
+              const body = response.body;       // ReadableStream&lt;Uint8Array&gt;
+              const reader = body.getReader();  // ReadableStreamDefaultReader
               while (true) {
                 const { done, value } = await reader.read();
-                if (done) break;
+                if (done) break; // reached end of stream
                 console.log(`received chunk with ${value.byteLength} bytes`);
               }
             </code></pre>
