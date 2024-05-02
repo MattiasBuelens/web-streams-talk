@@ -2,6 +2,15 @@
   --r-heading-line-height: 1;
 }
 
+blockquote > cite {
+  display: block;
+  text-align: right;
+}
+
+blockquote > cite::before {
+  content: "\2014\00A0"; /* &mdash;&nbsp; */
+}
+
 :not(pre) > code.hljs {
   background: none;
 }
