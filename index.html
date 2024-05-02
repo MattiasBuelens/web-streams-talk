@@ -69,7 +69,7 @@
           </section>
           <section>
             <h2>Kinds of values</h2>
-            <table>
+            <table class="stretch">
               <thead>
                 <tr>
                   <th></th>
@@ -79,16 +79,22 @@
               </thead>
               <tbody>
                 <tr>
-                  <th>Synchronous</th>
-                  <td><code class="language-ts">T</code></td>
+                  <th>Sync</th>
+                  <td>
+                    <code class="language-ts">T</code>
+                  </td>
                   <td>
                     <code class="language-ts" data-noescape
-                      >Iterator&lt;T&gt;</code
-                    >
+                      >Iterable&lt;T&gt;</code
+                    ><br />
+                    e.g.
+                    <code class="language-ts" data-noescape>Array&lt;T&gt;</code
+                    >,
+                    <code class="language-ts" data-noescape>Set&lt;T&gt;</code>
                   </td>
                 </tr>
                 <tr>
-                  <th>Asynchronous</th>
+                  <th>Async</th>
                   <td>
                     <code class="language-ts" data-noescape
                       >Promise&lt;T&gt;</code
@@ -96,7 +102,11 @@
                   </td>
                   <td>
                     <code class="language-ts" data-noescape
-                      >AsyncIterator&lt;T&gt;</code
+                      >AsyncIterable&lt;T&gt;</code
+                    ><br />
+                    e.g.
+                    <code class="language-ts" data-noescape
+                      >ReadableStream&lt;T&gt;</code
                     >
                   </td>
                 </tr>
