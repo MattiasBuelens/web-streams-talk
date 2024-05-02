@@ -97,7 +97,7 @@
                 <em>read</em> chunks
               </li>
               <li>
-                e.g.: HTTP response from
+                e.g.: reading an HTTP response using
                 <code class="language-js">fetch()</code>
               </li>
             </ul>
@@ -116,6 +116,27 @@
                 if (done) break; // reached end of stream
                 console.log(`received chunk with ${value.byteLength} bytes`);
               }
+            </code></pre>
+          </section>
+          <section>
+            <h2>Writable streams</h2>
+            <ul>
+              <li>
+                a <em>destination</em> for data into which you can
+                <em>write</em> chunks
+              </li>
+              <li>e.g.: writing to a file using the File System API</li>
+            </ul>
+            <pre><code class="language-js" data-trim data-line-numbers data-noescape>
+              // example from FileSystemWritableFileStream on MDN
+              // open a "Save file" dialog to let the user choose a file
+              const newFileHandle = await window.showSaveFilePicker();
+              // create a WritableFileStream
+              const writable = await newFileHandle.createWritable();
+              // write to our new file
+              await writable.write("This is my file content");
+              // close the file and write the contents to disk
+              await writable.close();
             </code></pre>
           </section>
           <section>
