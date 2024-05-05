@@ -184,6 +184,26 @@
               })
             </code></pre>
           </section>
+          <section>
+            <h2>Example: a stream of click events</h2>
+            <pre><code class="language-js" data-trim data-line-numbers data-noescape>
+              let clickListener;
+              const readable = new ReadableStream({
+                start(controller) {
+                  // add listener which pushes clicks onto the stream
+                  clickListener = (event) =>
+                    controller.enqueue({ x: event.pageX, y: event.pageY });
+                  window.addEventListener('click', clickListener);
+                },
+                pull(controller) {
+                  // nothing to do here, we can't "request" more click events
+                },
+                cancel(reason) {
+                  window.removeEventListener('click', clickListener);
+                }
+              });
+            </code></pre>
+          </section>
         </section>
         <section>
           <section>
