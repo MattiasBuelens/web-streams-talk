@@ -89,25 +89,44 @@
               </li>
             </ul>
           </section>
+        </section>
+        <section>
+          <section><h1>Readable streams</h1></section>
           <section>
-            <h2>Readable streams</h2>
+            <h2><code class="language-js">ReadableStream</code></h2>
             <ul>
               <li>
                 a <em>source</em> of data from which you can
                 <em>read</em> chunks
               </li>
               <li>
-                e.g.: reading an HTTP response using
-                <code class="language-js">fetch()</code>
+                can be read by a single consumer at a time, using a "reader"
               </li>
             </ul>
             <pre><code class="language-js" data-trim data-line-numbers data-noescape>
-              // non-streaming
+              const readable = new ReadableStream(/* ignore for now */);
+              const reader = reader.getReader();
+              while (true) {
+                // get the next chunk, waiting for it if necessary
+                const { done, value } = await reader.read();
+                if (done) {
+                  // no more chunks, end of stream
+                  break;
+                }
+                // got a chunk!
+                console.log(`received chunk: ${value}`);
+              }
+            </code></pre>
+          </section>
+          <section>
+            <h2>Example: streaming <code class="language-js">fetch()</code></h2>
+            <pre><code class="language-js" data-trim data-line-numbers data-noescape>
+              // reading HTTP response without streaming
               const response = await fetch("https://example.com");
               const bytes = await response.arrayBuffer();
               console.log(`received ${bytes.byteLength} total bytes`);
 
-              // streaming
+              // reading HTTP response with streaming
               const response = await fetch("https://example.com");
               const body = response.body;       // ReadableStream&lt;Uint8Array&gt;
               const reader = body.getReader();  // ReadableStreamDefaultReader
@@ -116,6 +135,53 @@
                 if (done) break; // reached end of stream
                 console.log(`received chunk with ${value.byteLength} bytes`);
               }
+            </code></pre>
+          </section>
+          <section data-auto-animate>
+            <h2>Creating a <code class="language-js">ReadableStream</code></h2>
+            <ul>
+              <li>
+                not all streams have to come from
+                <code class="language-js">fetch()</code>
+              </li>
+              <li>make your own!</li>
+            </ul>
+            <pre
+              data-id="code"
+            ><code class="language-js" data-trim data-line-numbers data-noescape>
+              const readable = new ReadableStream({
+                start(controller) {
+                  // called immediately during construction
+                  // for setup: open connections, add listeners,...
+                },
+                pull(controller) {
+                  // called when more data is needed
+                },
+                cancel(reason) {
+                  // called when consumer is no longer interested
+                  // for cleanup: close connection, remove listeners,...
+                }
+              })
+            </code></pre>
+          </section>
+          <section data-auto-animate>
+            <h2>Creating a <code class="language-js">ReadableStream</code></h2>
+            <ul>
+              <li>use the given controller to update the stream</li>
+            </ul>
+            <pre
+              data-id="code"
+            ><code class="language-js" data-trim data-line-numbers data-noescape>
+              const readable = new ReadableStream({
+                pull(controller) {
+                  // to push a chunk onto the stream:
+                  controller.enqueue("some data");
+                  // to close the stream normally (i.e. reached end of file)
+                  controller.close();
+                  // to close the stream abnormally (i.e. I/O error)
+                  controller.error(new Error("oh no"));
+                }
+              })
             </code></pre>
           </section>
           <section>
