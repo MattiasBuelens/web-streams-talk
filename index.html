@@ -455,6 +455,80 @@
         </section>
         <section>
           <section>
+            <h1>Queuing and backpressure</h1>
+          </section>
+          <section>
+            <h2>Internal queues</h2>
+            <ul>
+              <li>
+                <code class="language-js">ReadableStream</code>: holds chunks
+                enqueued by the backing source which the reader hasn't read yet
+              </li>
+              <li>
+                <code class="language-js">WritableStream</code>: holds chunks
+                written by the writer which the backing sink hasn't processed
+                yet
+              </li>
+              <li>
+                <code class="language-js">TransformStream</code>: has queues on
+                writable&nbsp;end (pre&#8209;transform) and readable&nbsp;end
+                (post&#8209;transform)
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h2>Filling up the queue</h2>
+            <p>
+              each stream has a queuing strategy, which determines the desired
+              size of the stream's queue
+            </p>
+            <pre><code class="language-js" data-trim data-line-numbers data-noescape>
+              let s1 = new CountQueuingStrategy({ highWaterMark: 10 });
+              // ^ want at least 10 chunks in the queue
+              let s2 = new ByteLengthQueuingStrategy({ highWaterMark: 1024 });
+              // ^ want at least 1 KB in the queue (for byte streams)
+
+              let readable = new ReadableStream({
+                pull(controller) {
+                  console.log("pull called");
+                  controller.enqueue("chunk");
+                }
+              }, new CountQueuingStrategy({ highWaterMark: 10 }));
+              // ^ calls pull() 10 times, then pauses
+            </code></pre>
+          </section>
+          <section>
+            <h2>Backpressure</h2>
+            <ul>
+              <li>
+                once queue's size exceeds desired size, it will apply
+                backpressure
+                <ul>
+                  <li>
+                    <code class="language-js">ReadableStream</code>: stop
+                    calling <code class="language-js">pull()</code>
+                  </li>
+                  <li>
+                    <code class="language-js">WritableStream</code>: signal "not
+                    ready" to writer
+                  </li>
+                </ul>
+              </li>
+              <li>
+                in a long pipe chain, backpressure signal propagates from the
+                back to the front to normalize the flow of chunks
+                <ul>
+                  <li>
+                    when it reaches the original source, it should try to
+                    produce chunks at a slower pace
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <section>
             <h1>Advanced use cases</h1>
           </section>
           <section>
