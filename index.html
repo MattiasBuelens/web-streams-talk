@@ -245,7 +245,7 @@
             <h2>Example: a stream of events</h2>
             <pre><code class="language-js" data-trim data-line-numbers data-noescape>
               let clickListener;
-              const readable = new ReadableStream({
+              const clickStream = new ReadableStream({
                 start(controller) {
                   // add listener which pushes clicks onto the stream
                   clickListener = (event) =>
@@ -260,6 +260,24 @@
                 }
               });
             </code></pre>
+            <p>= a "push source": data is added even when no-one is reading</p>
+          </section>
+          <section>
+            <h2>Example: an infinite stream of blog posts</h2>
+            <pre><code class="language-js" data-trim data-line-numbers data-noescape>
+              let page = 1;
+              const blogPostStream = new ReadableStream({
+                async pull(controller) {
+              //^^^^^ stream will wait for previous pull
+              //      before starting a new pull
+                  const response = await fetch(`/api/posts?page=${page}`);
+                  const posts = await response.json();
+                  posts.forEach((post) => controller.enqueue(post));
+                  page += 1;
+                }
+              });
+            </code></pre>
+            <p>= a "pull source": data is only added when requested</p>
           </section>
         </section>
         <section>
