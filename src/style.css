@@ -13,6 +13,15 @@
   font-size: 90%;
 }
 
+.reveal :is(h1, h2, h3, h4, h5, h6) {
+  text-wrap: balance;
+}
+
+.reveal ul,
+.reveal p {
+  text-wrap: pretty;
+}
+
 .reveal .fragment.current-appear:not(.current-fragment) {
   display: none;
 }
