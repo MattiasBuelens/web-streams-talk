@@ -306,6 +306,63 @@
               await writer.close();
             </code></pre>
           </section>
+          <section data-auto-animate>
+            <h2>Creating a <code class="language-js">WritableStream</code></h2>
+            <pre
+              data-id="code"
+            ><code class="language-js" data-trim data-line-numbers data-noescape>
+              const writable = new WritableStream({
+                start(controller) {
+                  // called immediately during construction
+                },
+                write(chunk, controller) {
+                  // called when a new chunk is written
+                },
+                close() {
+                  // called when no more data will be written
+                  // (e.g. end of input)
+                },
+                abort(reason) {
+                  // called when producer encounters a problem
+                }
+              });
+            </code></pre>
+          </section>
+          <section>
+            <h2>Example: a simple logger</h2>
+            <pre><code class="language-js" data-trim data-line-numbers data-noescape>
+              const logStream = new WritableStream({
+                write(chunk) {
+                  console.log("Wrote chunk: ", chunk);
+                },
+                close() {
+                  console.log("Done writing");
+                },
+                abort(reason) {
+                  console.error("Aborted by producer: ", reason);
+                }
+              });
+            </code></pre>
+          </section>
+          <section>
+            <h2>Piping a readable to a writable stream</h2>
+            <pre
+              data-id="code"
+            ><code class="language-js" data-trim data-line-numbers data-noescape>
+              const readable = new ReadableStream(/* ... */);
+              const writable = new WritableStream(/* ... */);
+              await readable.pipeTo(writable);
+            </code></pre>
+            <ul>
+              <li>
+                reads every chunk from
+                <code class="language-js">readable</code> and writes it to
+                <code class="language-js">writable</code>
+              </li>
+              <li>closes writable once readable closes</li>
+              <li>propagates errors</li>
+            </ul>
+          </section>
         </section>
         <section>
           <section>
