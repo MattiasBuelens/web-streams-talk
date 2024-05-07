@@ -574,7 +574,97 @@
         </section>
         <section>
           <section>
-            <h1>Advanced use cases</h1>
+            <h1>New and upcoming features</h1>
+          </section>
+          <section data-auto-animate data-auto-animate-id="iterator">
+            <h2>Async iteration</h2>
+            <p>
+              integrates with JavaScript's
+              <code class="language-js">for await of</code>
+            </p>
+            <pre
+              data-id="code"
+            ><code class="language-js" data-trim data-line-numbers data-noescape>
+              // before:
+              const readable = new ReadableStream(/* ... */);
+              const reader = reader.getReader();
+              while (true) {
+                const { done, value } = await reader.read();
+                if (done) {
+                  break;
+                }
+                console.log(`received chunk: ${value}`);
+              }
+            </code></pre>
+          </section>
+          <section data-auto-animate data-auto-animate-id="iterator">
+            <h2>Async iteration</h2>
+            <p>
+              integrates with JavaScript's
+              <code class="language-js">for await of</code>
+            </p>
+            <pre
+              data-id="code"
+            ><code class="language-js" data-trim data-line-numbers data-noescape>
+              // after:
+              const readable = new ReadableStream(/* ... */);
+              for await (const value of readable) {
+                console.log(`received chunk: ${value}`);
+              }
+            </code></pre>
+          </section>
+          <section>
+            <h2>Async iteration</h2>
+            <blockquote>
+              <img
+                src="assets/caniuse-asynciterator.png"
+                alt="Browser support for ReadableStream API: @@asyncIterator. Chrome supports it starting from version 124 and Firefox starting from version 110. Safari doesn't support it yet."
+              />
+              <cite
+                ><a
+                  href="https://caniuse.com/mdn-api_readablestream_--asynciterator"
+                  >caniuse.com</a
+                ></cite
+              >
+            </blockquote>
+          </section>
+          <section>
+            <h2>
+              <code class="language-js">ReadableStream.from()</code>
+            </h2>
+            <p>
+              converts arrays, iterables or async iterables to a
+              <code class="language-js">ReadableStream</code>
+            </p>
+            <pre><code class="language-js" data-trim data-line-numbers data-noescape>
+              ReadableStream.from(["an", "array", "of", "chunks"]);
+              ReadableStream.from(new Set(["a", "set", "of", "chunks"]));
+              ReadableStream.from((async function*() {
+                yield "an";
+                yield "async";
+                yield "generator";
+              })());
+
+              // in Node.js:
+              ReadableStream.from(fileHandle.createReadStream());
+            </code></pre>
+          </section>
+          <section>
+            <h2>
+              <code class="language-js">ReadableStream.from()</code>
+            </h2>
+            <blockquote>
+              <img
+                src="assets/caniuse-from.png"
+                alt="Browser support for ReadableStream API: from() static method. Firefox supports it starting from version 117. Chrome and Safari don't support it yet."
+              />
+              <cite
+                ><a
+                  href="https://caniuse.com/mdn-api_readablestream_from_static"
+                  >caniuse.com</a
+                ></cite
+              >
+            </blockquote>
           </section>
           <section>
             <h2>Streaming across threads</h2>
@@ -635,6 +725,30 @@
                 ></cite
               >
             </blockquote>
+          </section>
+          <section>
+            <h2>Can't wait? Polyfill it!</h2>
+            <ul>
+              <li>
+                <a href="https://www.npmjs.com/package/web-streams-polyfill"
+                  >web-streams-polyfill on npm</a
+                >
+                <ul>
+                  <li>✅ Async iteration</li>
+                  <li>
+                    ✅ <code class="language-js">ReadableStream.from()</code>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="https://www.npmjs.com/package/remote-web-streams"
+                  >remote-web-streams on npm</a
+                >
+                <ul>
+                  <li>✅ Transferable streams (with different API)</li>
+                </ul>
+              </li>
+            </ul>
           </section>
         </section>
         <section data-visibility="hidden">
