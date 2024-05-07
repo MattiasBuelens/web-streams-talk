@@ -279,6 +279,51 @@
             </code></pre>
             <p>= a "pull source": data is only added when requested</p>
           </section>
+          <section data-auto-animate>
+            <h2>Problem: stream can only be read once</h2>
+            <pre
+              data-id="code"
+            ><code class="language-js" data-trim data-line-numbers data-noescape>
+              const response = await fetch("https://example.com");
+              const body = response.body;
+              const reader1 = body.getReader();
+              while (true) {
+                const { done, value } = await reader1.read();
+                if (done) break; // reached end of stream
+                console.log(`received chunk with ${value.byteLength} bytes`);
+              }
+
+              const reader2 = body.getReader();
+              while (true) {
+                const { done, value } = await reader2.read();
+                // ^ will always be { done: true, value: undefined };
+                if (done) break;
+              }
+            </code></pre>
+          </section>
+          <section data-auto-animate>
+            <h2>Solution: <code class="language-js">tee()</code></h2>
+            <pre
+              data-id="code"
+            ><code class="language-js" data-trim data-line-numbers data-noescape>
+              const response = await fetch("https://example.com");
+              const body = response.body;
+              const [body1, body2] = body.tee();
+              const reader1 = body1.getReader();
+              while (true) {
+                const { done, value } = await reader1.read();
+                if (done) break; // reached end of stream
+                console.log(`received chunk with ${value.byteLength} bytes`);
+              }
+
+              const reader2 = body2.getReader();
+              while (true) {
+                const { done, value } = await reader2.read();
+                // ^ receives the same chunks as reader1
+                if (done) break;
+              }
+            </code></pre>
+          </section>
         </section>
         <section>
           <section>
