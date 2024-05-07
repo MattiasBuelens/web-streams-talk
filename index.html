@@ -368,7 +368,90 @@
           <section>
             <h1>Transform streams</h1>
           </section>
-          <!-- TODO -->
+          <section>
+            <h2><code class="language-js">TransformStream</code></h2>
+            <ul>
+              <li>a pair of writable and readable streams</li>
+              <li>
+                data written into the writable end is transformed and made
+                available through the readable end
+              </li>
+            </ul>
+            <pre><code class="language-js" data-trim data-line-numbers data-noescape>
+              const upperCaseTransform = new TransformStream({
+                start(controller) {},
+                transform(chunk, controller) {
+                  // called when a new chunk is written to the writable end
+                  // can transform it and enqueue to the readable end:
+                  controller.enqueue(chunk.toUpperCase());
+                },
+                flush(controller) {}, // called when writable end is closed
+                cancel(reason) {
+                  // called when writable end is aborted
+                  // or readable end is cancelled
+                }
+              });
+            </code></pre>
+          </section>
+          <section data-auto-animate>
+            <h2>Using a transform stream</h2>
+            <pre
+              data-id="code"
+            ><code class="language-js" data-trim data-line-numbers data-noescape>
+              const input = new ReadableStream(/* ... */);
+              const upperCaseTransform = new TransformStream({
+                transform(chunk, controller) {
+                  controller.enqueue(chunk.toUpperCase());
+                }
+              });
+              const output = new WritableStream(/* ... */);
+
+              input
+                .pipeTo(upperCaseTransform.writable)
+                .catch(() => {});
+              // ^^^ important: don't await the pipeTo() call!
+              upperCaseTransform.readable
+                .pipeTo(output).catch(console.error);
+            </code></pre>
+          </section>
+          <section data-auto-animate>
+            <h2>Using a transform stream</h2>
+            <pre
+              data-id="code"
+            ><code class="language-js" data-trim data-line-numbers data-noescape>
+              const input = new ReadableStream(/* ... */);
+              const upperCaseTransform = new TransformStream({
+                transform(chunk, controller) {
+                  controller.enqueue(chunk.toUpperCase());
+                }
+              });
+              const output = new WritableStream(/* ... */);
+
+              input
+                .pipeThrough(upperCaseTransform)
+                .pipeTo(output).catch(console.error);
+            </code></pre>
+          </section>
+          <section data-auto-animate>
+            <h2>Pipe chains</h2>
+            <pre
+              data-id="code"
+            ><code class="language-js" data-trim data-line-numbers data-noescape>
+              const input = new ReadableStream(/* ... */);
+              const upperCaseTransform = new TransformStream(/* ... */);
+              const reverseTransform = new TransformStream({
+                transform(chunk, controller) {
+                  controller.enqueue(chunk.reverse());
+                }
+              });
+              const output = new WritableStream(/* ... */);
+
+              input
+                .pipeThrough(upperCaseTransform)
+                .pipeThrough(reverseTransform)
+                .pipeTo(output).catch(console.error);
+            </code></pre>
+          </section>
         </section>
         <section>
           <section>
