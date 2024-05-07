@@ -578,12 +578,10 @@
           </section>
           <section>
             <h2>Streaming across threads</h2>
-            <ul>
-              <li>
-                all streams are transferable, which means you can
-                <code class="language-js">postMessage()</code> them to a worker
-              </li>
-            </ul>
+            <p>
+              all streams are transferable, which means you can
+              <code class="language-js">postMessage()</code> them to a worker
+            </p>
             <pre><code class="language-js" data-trim data-line-numbers data-noescape>
               // page.js
               const worker = new Worker("worker.js");
@@ -604,9 +602,7 @@
           </section>
           <section>
             <h2>Streaming across threads</h2>
-            <ul>
-              <li>move CPU-intensive work to another thread</li>
-            </ul>
+            <p>move CPU-intensive work to another thread</p>
             <pre><code class="language-js" data-trim data-line-numbers data-noescape>
               // page.js
               const worker = new Worker("worker.js");
@@ -624,6 +620,21 @@
               });
               self.postMessage(transform, { transfer: [transform] });
             </code></pre>
+          </section>
+          <section>
+            <h2>Streaming across threads</h2>
+            <blockquote>
+              <img
+                src="assets/caniuse-transferable.png"
+                alt="Browser support for ReadableStream API: transferable. Chrome supports it starting from version 87 and Firefox starting from version 103. Safari doesn't support it yet."
+              />
+              <cite
+                ><a
+                  href="https://caniuse.com/mdn-api_readablestream_transferable"
+                  >caniuse.com</a
+                ></cite
+              >
+            </blockquote>
           </section>
         </section>
         <section data-visibility="hidden">
