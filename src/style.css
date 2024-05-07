@@ -9,6 +9,10 @@
   --r-heading-line-height: 1;
 }
 
+.reveal :is(h1, h2, h3) code {
+  font-size: 90%;
+}
+
 .reveal .fragment.current-appear:not(.current-fragment) {
   display: none;
 }
