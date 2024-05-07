@@ -218,7 +218,7 @@
                   // called when consumer is no longer interested
                   // for cleanup: close connection, remove listeners,...
                 }
-              })
+              });
             </code></pre>
           </section>
           <section data-auto-animate>
@@ -238,7 +238,7 @@
                   // to close the stream abnormally (i.e. I/O error)
                   controller.error(new Error("oh no"));
                 }
-              })
+              });
             </code></pre>
           </section>
           <section>
@@ -297,12 +297,13 @@
               // example from FileSystemWritableFileStream on MDN
               // open a "Save file" dialog to let the user choose a file
               const newFileHandle = await window.showSaveFilePicker();
-              // create a WritableFileStream
+              // create a WritableStream from our file
               const writable = await newFileHandle.createWritable();
-              // write to our new file
-              await writable.write("This is my file content");
+              // write to the file
+              const writer = writable.getWriter();
+              await writer.write("This is my file content");
               // close the file and write the contents to disk
-              await writable.close();
+              await writer.close();
             </code></pre>
           </section>
         </section>
