@@ -37,6 +37,7 @@
 blockquote > cite {
   display: block;
   text-align: right;
+  margin: 0 1em 0.5em 0;
 }
 
 blockquote > cite::before {
@@ -63,6 +64,7 @@ h1.heading-with-photo {
 }
 
 .heading-with-photo > img {
+  margin: 0;
   width: 15%;
   border: 5px solid var(--r-heading-color);
   border-radius: 100%;
