@@ -30,3 +30,17 @@ blockquote > cite::before {
 :not(pre) > code.hljs * {
   font-style: normal;
 }
+
+.heading-with-photo {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25em;
+}
+
+.heading-with-photo > img {
+  width: 20%;
+  border: 5px solid var(--r-heading-color);
+  border-radius: 100%;
+  box-shadow: 0 0.1em 0.2em rgb(0 0 0 / 75%);
+}
