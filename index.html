@@ -115,6 +115,37 @@
               </li>
             </ul>
           </section>
+          <section>
+            <h2>Why streams?</h2>
+            <ul>
+              <li>
+                process large amounts of data that can't fit in RAM
+                <ul>
+                  <li>e.g. full-text search through all of Wikipedia</li>
+                  <li>
+                    e.g. process uncompressed full HD video<br />
+                    1 byte/channel &times; 3 channels (RGB) &times;
+                    (1920&times;1080) pixels &times; 25 frames/second &times; 60
+                    seconds = <strong>9.3 GB per minute</strong>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                serve content before the page is fully loaded
+                <ul>
+                  <li>
+                    e.g.
+                    <code class="language-js">renderToReadableStream()</code>
+                    in React
+                  </li>
+                  <li>
+                    e.g. start playing as soon as first few video frames have
+                    been downloaded
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </section>
         </section>
         <section>
           <section><h1>Readable streams</h1></section>
