@@ -1,3 +1,10 @@
+:root {
+  --r-heading-font: "Francois One", sans-serif;
+  --r-heading-font-weight: 400;
+  --r-heading-text-transform: none;
+  --r-heading-letter-spacing: -1px;
+}
+
 .reveal h1 {
   --r-heading-line-height: 1;
 }
@@ -38,8 +45,12 @@ blockquote > cite::before {
   gap: 0.25em;
 }
 
+h1.heading-with-photo {
+  font-size: calc(0.8 * var(--r-heading1-size));
+}
+
 .heading-with-photo > img {
-  width: 20%;
+  width: 15%;
   border: 5px solid var(--r-heading-color);
   border-radius: 100%;
   box-shadow: 0 0.1em 0.2em rgb(0 0 0 / 75%);
